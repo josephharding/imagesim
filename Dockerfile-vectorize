@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 
 ADD . /usr/src/app
 
-CMD [ "ls", "-ls", "/tmp/imagenet/"]
+CMD [ "python", "classify_image.py"]
