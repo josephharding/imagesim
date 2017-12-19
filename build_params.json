@@ -5,6 +5,10 @@
     {
       "file": "Dockerfile-vectorize",
       "image": "imagesim-vectorize"
+    },
+    {
+      "file": "Dockerfile-cluster",
+      "image": "imagesim-cluster"
     }
   ]
 }
