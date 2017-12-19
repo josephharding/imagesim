@@ -13,7 +13,7 @@ chart_image_positions = {}
 dims = 2048
 n_nearest_neighbors = 30
 trees = 10000
-infiles = glob.glob('out/*.npz')
+infiles = glob.glob(os.environ['VECTOR_GLOB'])
 
 # build ann index
 t = AnnoyIndex(dims)
@@ -26,8 +26,8 @@ for file_index, i in enumerate(infiles):
 t.build(trees)
 
 # create a nearest neighbors json file for each input
-if not os.path.exists('nearest_neighbors'):
-  os.makedirs('nearest_neighbors')
+if not os.path.exists(os.environ['CLUSTER_DIR']):
+  os.makedirs(os.environ['CLUSTER_DIR'])
 
 for i in file_index_to_file_name.keys():
   master_file_name = file_index_to_file_name[i]
@@ -47,5 +47,5 @@ for i in file_index_to_file_name.keys():
       'similarity': rounded_similarity
     })
 
-  with open('nearest_neighbors/' + master_file_name + '.json', 'w') as out:
+  with open(os.environ['CLUSTER_DIR'] + '/' + master_file_name + '.json', 'w') as out:
     json.dump(named_nearest_neighbors, out)
