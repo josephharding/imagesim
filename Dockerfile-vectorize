@@ -1,0 +1,16 @@
+FROM nvidia/cuda:8.0-cudnn6-runtime
+
+RUN apt update && apt install -y python-pip libglib2.0-0 wget
+
+RUN wget -qO- http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz | tar xvz -C /tmp/imagenet
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# add requirements and pip install as a separate step from adding all source to speed up builds
+ADD ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r requirements.txt
+
+ADD . /usr/src/app
+
+CMD [ "python", "classify_image.py" ]

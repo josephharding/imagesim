@@ -273,9 +273,11 @@ def main(_):
   maybe_download_and_extract()
   #image = (FLAGS.image_file if FLAGS.image_file else
   #         os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
-  images = glob2.glob(FLAGS.image_dir)
+  print('IMAGE_DIR =', os.environ['IMAGE_DIR'])
+  print('OUT_DIR =', os.environ['OUT_DIR'])
+  images = glob2.glob(FLAGS.image_dir if FLAGS.image_dir else os.environ['IMAGE_DIR'])
   print(images)
-  run_inference_on_images(images, './out')
+  run_inference_on_images(images, os.environ['OUT_DIR'] if os.environ['OUT_DIR'] else './out')
 
 
 if __name__ == '__main__':

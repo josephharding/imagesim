@@ -1,0 +1,10 @@
+{
+  "build_host":"toybox",
+  "project":"imagesim",
+  "docker_targets":[
+    {
+      "file": "Dockerfile-vectorize",
+      "image": "imagesim-vectorize"
+    }
+  ]
+}

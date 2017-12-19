@@ -1,0 +1,7 @@
+tensorflow
+numpy
+psutil
+glob2
+annoy
+scipy
+nltk
