@@ -37,20 +37,25 @@ for i in file_index_to_file_name.keys():
   master_file_name = file_index_to_file_name[i]
   master_vector = file_index_to_file_vector[i]
 
-  named_nearest_neighbors = []
-  nearest_neighbors = t.get_nns_by_item(i, n_nearest_neighbors)
-  for j in nearest_neighbors:
-    neighbor_file_name = file_index_to_file_name[j]
-    neighbor_file_vector = file_index_to_file_vector[j]
+  fname = os.environ['CLUSTER_DIR'] + '/' + master_file_name + '.json'
+  if not os.path.isfile(fname): 
+    named_nearest_neighbors = []
+    nearest_neighbors = t.get_nns_by_item(i, n_nearest_neighbors)
+    for j in nearest_neighbors:
+      neighbor_file_name = file_index_to_file_name[j]
+      neighbor_file_vector = file_index_to_file_vector[j]
 
-    similarity = 1 - spatial.distance.cosine(master_vector, neighbor_file_vector)
-    rounded_similarity = int((similarity * 10000)) / 10000.0
+      similarity = 1 - spatial.distance.cosine(master_vector, neighbor_file_vector)
+      rounded_similarity = int((similarity * 10000)) / 10000.0
 
-    named_nearest_neighbors.append({
-      'filename': neighbor_file_name,
-      'similarity': rounded_similarity
-    })
+      named_nearest_neighbors.append({
+        'filename': neighbor_file_name,
+        'similarity': rounded_similarity
+      })
 
-  with open(os.environ['CLUSTER_DIR'] + '/' + master_file_name + '.json', 'w') as out:
-    json.dump(named_nearest_neighbors, out)
-    print(master_file_name, " complete, progress:", float(i / len(infiles)))
+    with open(fname, 'w') as out:
+      json.dump(named_nearest_neighbors, out)
+      print(master_file_name, " complete, progress:", float(i / len(infiles)))
+
+  else:
+    print(fname, "already exists, skipping...")
