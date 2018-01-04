@@ -55,7 +55,7 @@ for i in file_index_to_file_name.keys():
 
     with open(fname, 'w') as out:
       json.dump(named_nearest_neighbors, out)
-      print(master_file_name, " complete, progress:", float(i / len(infiles)))
+      print(master_file_name, " complete, progress:", float(i) / len(infiles))
 
   else:
     print(fname, "already exists, skipping...")
