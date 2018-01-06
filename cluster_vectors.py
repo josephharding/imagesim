@@ -15,7 +15,7 @@ n_nearest_neighbors = 30
 trees = 10000
 infiles = glob.glob(os.environ['VECTOR_GLOB'])
 
-print("building annoy index...")
+print("building annoy index from", len(infiles), "files...")
 
 # build ann index
 t = AnnoyIndex(dims)
@@ -27,11 +27,11 @@ for file_index, i in enumerate(infiles):
   t.add_item(file_index, file_vector)
 t.build(trees)
 
+print("annoy index complete, calculating nearest neighbors...")
+
 # create a nearest neighbors json file for each input
 if not os.path.exists(os.environ['CLUSTER_DIR']):
   os.makedirs(os.environ['CLUSTER_DIR'])
-
-print("annoy index complete, calculating nearest neighbors...")
 
 for i in file_index_to_file_name.keys():
   master_file_name = file_index_to_file_name[i]
