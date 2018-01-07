@@ -13,7 +13,14 @@ chart_image_positions = {}
 dims = 2048
 n_nearest_neighbors = 30
 trees = 10000
-infiles = glob.glob(os.environ['VECTOR_GLOB'])
+infiles = glob.glob(os.environ['VECTOR_GLOB'])[:100]
+
+fname = os.environ['CLUSTER_DIR'] + '/' + 'AVpd0_03hp-dCVDgc8X6' + '.json'
+
+if os.path.isfile(fname):
+  print("fname is file:", fname)
+else:
+  print("fname not to be found file:", fname)
 
 print("building annoy index from", len(infiles), "files...")
 
