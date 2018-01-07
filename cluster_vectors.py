@@ -12,15 +12,8 @@ chart_image_positions = {}
 # config
 dims = 2048
 n_nearest_neighbors = 30
-trees = 10000
-infiles = glob.glob(os.environ['VECTOR_GLOB'])[:100]
-
-fname = os.environ['CLUSTER_DIR'] + '/' + 'AVpd0_03hp-dCVDgc8X6' + '.json'
-
-if os.path.isfile(fname):
-  print("fname is file:", fname)
-else:
-  print("fname not to be found file:", fname)
+trees = 1000
+infiles = glob.glob(os.environ['VECTOR_GLOB'])
 
 print("building annoy index from", len(infiles), "files...")
 
@@ -32,6 +25,7 @@ for file_index, i in enumerate(infiles):
   file_index_to_file_name[file_index] = file_name
   file_index_to_file_vector[file_index] = file_vector
   t.add_item(file_index, file_vector)
+  print("memory (kb):", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
 t.build(trees)
 
 print("annoy index complete, calculating nearest neighbors...")
