@@ -3,6 +3,7 @@ from scipy import spatial
 from nltk import ngrams
 import random, json, glob, os, codecs, random
 import numpy as np
+import resource as resource
 
 # data structures
 file_index_to_file_name = {}

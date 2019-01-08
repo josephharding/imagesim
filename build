@@ -1,21 +1,16 @@
 #!/bin/bash
 
-echo "capture version info"
-VERSION=`git rev-parse --short HEAD`
+IMAGE_DIR=/tmp/image_dir
+VECTOR_DIR=/tmp/vectors
+OUT_DIR=/tmp/out
 
-echo "clone the imgmt repo"
-git clone git@github.com:josephharding/imgmt.git
+mkdir $IMAGE_DIR $VECTOR_DIR $OUT_DIR
 
-echo "cd into imgmt"
-cd imgmt
+# download a bunch of pics and put them in image dir
 
-echo "run the packaging play against inventory: ${1}"
-ansible-playbook -i $1 package-docker-app.yml \
-  --extra-vars "@../build_params.json" \
-  --extra-vars "project_root='`pwd`/../' image_version='${VERSION}'"
+docker build -t imagesim-vectorize -f Dockerfile-vectorize .
+docker build -t imagesim-cluster -f Dockerfile-cluster .
 
-echo "leave the imgmt dir"
-cd ..
+docker run -v $IMAGE_DIR:/usr/src/app/image_dir -v $VECTOR_DIR:/usr/src/app/vector --env-file=env-vectorize imagesim-vectorize:latest
+docker run -v $VECTOR_DIR:/usr/src/app/vector -v $OUT_DIR:/usr/src/app/nearest_neighbors --env-file=env-cluster imagesim-cluster:latest
 
-echo "clean up the deploy dir"
-rm -rf imgmt

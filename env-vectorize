@@ -1,0 +1,2 @@
+IMAGE_GLOB=/usr/src/app/image_dir/*
+VECTOR_DIR=/usr/src/app/vector

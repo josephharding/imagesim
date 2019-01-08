@@ -1,0 +1,2 @@
+VECTOR_GLOB=/usr/src/app/vector/*
+CLUSTER_DIR=/usr/src/app/nearest_neighbors

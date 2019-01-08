@@ -9,7 +9,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # add requirements and pip install as a separate step from adding all source to speed up builds
-ADD ./requirements.txt /usr/src/app/requirements.txt
+ADD ./requirements-mac.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
 
 ADD . /usr/src/app
