@@ -210,75 +210,8 @@ def run_inference_on_images(image_list, output_dir):
   return image_to_labels
 
 
-def run_inference_on_image(image):
-  """Runs inference on an image.
-
-  Args:
-    image: Image file name.
-
-  Returns:
-    Nothing
-  """
-  if not tf.gfile.Exists(image):
-    tf.logging.fatal('File does not exist %s', image)
-  image_data = tf.gfile.FastGFile(image, 'rb').read()
-
-  # Creates graph from saved GraphDef.
-  create_graph()
-
-  with tf.Session() as sess:
-    # Some useful tensors:
-    # 'softmax:0': A tensor containing the normalized prediction across
-    #   1000 labels.
-    # 'pool_3:0': A tensor containing the next-to-last layer containing 2048
-    #   float description of the image.
-    # 'DecodeJpeg/contents:0': A tensor containing a string providing JPEG
-    #   encoding of the image.
-    # Runs the softmax tensor by feeding the image_data as input to the graph.
-    softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
-    predictions = sess.run(softmax_tensor,
-                           {'DecodeJpeg/contents:0': image_data})
-    predictions = np.squeeze(predictions)
-
-    # Creates node ID --> English string lookup.
-    node_lookup = NodeLookup()
-
-    top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
-    for node_id in top_k:
-      human_string = node_lookup.id_to_string(node_id)
-      score = predictions[node_id]
-      print('%s (score = %.5f)' % (human_string, score))
-
-
-def maybe_download_and_extract():
-  """Download and extract model tar file."""
-  dest_directory = FLAGS.model_dir
-  if not os.path.exists(dest_directory):
-    os.makedirs(dest_directory)
-  filename = DATA_URL.split('/')[-1]
-  filepath = os.path.join(dest_directory, filename)
-  print("checking filepath:", filepath)
-  print("checking filepath exists:", os.path.exists(filepath))
-  if not os.path.exists(filepath):
-    def _progress(count, block_size, total_size):
-      sys.stdout.write('\r>> Downloading %s %.1f%%' % (
-          filename, float(count * block_size) / float(total_size) * 100.0))
-      sys.stdout.flush()
-    filepath, _ = urllib.request.urlretrieve(DATA_URL, filepath, _progress)
-    print()
-    statinfo = os.stat(filepath)
-    print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
-  tarfile.open(filepath, 'r:gz').extractall(dest_directory)
-
-
 def main(_):
-  #maybe_download_and_extract()
-  #image = (FLAGS.image_file if FLAGS.image_file else
-  #         os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
-  print('IMAGE_GLOB =', os.environ['IMAGE_GLOB'])
-  print('VECTOR_DIR =', os.environ['VECTOR_DIR'])
   images = glob2.glob(FLAGS.image_dir if FLAGS.image_dir else os.environ['IMAGE_GLOB'])
-  print(images)
   run_inference_on_images(images, os.environ['VECTOR_DIR'] if os.environ['VECTOR_DIR'] else './out')
 
 

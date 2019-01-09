@@ -1,0 +1,22 @@
+#!/bin/bash
+
+IMAGE_DIR=/tmp/images
+VECTOR_DIR=/tmp/vectors
+OUT_DIR=/tmp/out
+
+if [ ! -d "$IMAGE_DIR" ]; then
+  echo "no image dir found at $IMAGE_DIR.." 
+  exit 1
+fi
+if [ -z "$(ls -A $IMAGE_DIR)" ]; then
+  echo "$IMAGE_DIR was empty, quitting.."
+  exit 1
+fi
+
+rm -rf $VECTOR_DIR $OUT_DIR
+mkdir $VECTOR_DIR $OUT_DIR
+
+# TODO - do checks on existence of image dir, and of the dirs to be created next
+
+docker run -v $IMAGE_DIR:/usr/src/app/image_dir -v $VECTOR_DIR:/usr/src/app/vector --env-file=env-vectorize imagesim-vectorize:latest
+docker run -v $VECTOR_DIR:/usr/src/app/vector -v $OUT_DIR:/usr/src/app/nearest_neighbors --env-file=env-cluster imagesim-cluster:latest

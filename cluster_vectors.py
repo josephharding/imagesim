@@ -3,7 +3,6 @@ from scipy import spatial
 from nltk import ngrams
 import random, json, glob, os, codecs, random
 import numpy as np
-import resource as resource
 
 # data structures
 file_index_to_file_name = {}
@@ -26,7 +25,6 @@ for file_index, i in enumerate(infiles):
   file_index_to_file_name[file_index] = file_name
   file_index_to_file_vector[file_index] = file_vector
   t.add_item(file_index, file_vector)
-  print("memory (kb):", resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024)
 t.build(trees)
 
 print("annoy index complete, calculating nearest neighbors...")

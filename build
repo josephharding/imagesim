@@ -1,16 +1,3 @@
 #!/bin/bash
-
-IMAGE_DIR=/tmp/image_dir
-VECTOR_DIR=/tmp/vectors
-OUT_DIR=/tmp/out
-
-mkdir $IMAGE_DIR $VECTOR_DIR $OUT_DIR
-
-# download a bunch of pics and put them in image dir
-
 docker build -t imagesim-vectorize -f Dockerfile-vectorize .
 docker build -t imagesim-cluster -f Dockerfile-cluster .
-
-docker run -v $IMAGE_DIR:/usr/src/app/image_dir -v $VECTOR_DIR:/usr/src/app/vector --env-file=env-vectorize imagesim-vectorize:latest
-docker run -v $VECTOR_DIR:/usr/src/app/vector -v $OUT_DIR:/usr/src/app/nearest_neighbors --env-file=env-cluster imagesim-cluster:latest
-
