@@ -7,23 +7,21 @@ NOTE: This code is a modified version of Google's TensorFlow tutorial on the Inc
 
 ### Prereqs
 
-1. Docker
+1. Docker (tested with version 2.0.0.0-mac81 (29211), Docker Engine 18.09.0)
 
 ### Build
 
-Build the two docker images, `imagesim-vectorize` and `imagesim-cluster`:
+First, build the two docker images, `imagesim-vectorize` and `imagesim-cluster`:
 
 ```
 ./build
 ```
 
+This will take a few minutes as an Ubuntu base environment is setup with support for CUDA enabled Tensorflow libraries.
+
 ### Run
 
-Edit the `IMAGE_DIR`, `VECTOR_DIR`, `OUT_DIR` variables to change where the script should find your images, where to place the vector representation of each image (this is useful if you'd like to inspect the raw vector for debugging), and where to place the final output json that contains the similarity value of each image to every other image.
-
-NOTE: These variables are used as docker volumes, which do not support relative paths, so please make sure to use absolute paths: https://github.com/moby/moby/issues/4830
-
-To get started, try using these images: https://drive.google.com/file/d/1THdx5I-JIKvCx6c_DDh82_U1l5KJYS19/view?usp=sharing, and unzip them into `/tmp/images`
+To get started, try using these images: https://drive.google.com/file/d/1THdx5I-JIKvCx6c_DDh82_U1l5KJYS19/view?usp=sharing, and unzip them into `/tmp/imagesim_images`
 
 Now, generate image similarity values for these with the run command:
 
@@ -31,7 +29,7 @@ Now, generate image similarity values for these with the run command:
 ./run
 ```
 
-Using the images linked above with the default `*_DIR` values, your expected output will look like this:
+Using the images linked above, your expected output should look like this:
 
 ```
 imagesim (master) $ ls /tmp/imagesim_out/
@@ -41,3 +39,9 @@ imagesim (master) $ cat /tmp/imagesim_out/cabin0.json
 ```
 
 Now try adding a new JPEG to the images directory and see how similar it is to the existing images!
+
+### Customization of Paths
+
+If you don't want to use the default paths in `/tmp`, edit the `IMAGE_DIR`, `VECTOR_DIR`, `OUT_DIR` variables in the file `run` to change where the script should find your images, where to place the vector representation of each image (this is useful if you'd like to inspect the raw vector for debugging), and where to place the final output json that contains the similarity value of each image to every other image.
+
+NOTE: These variables are used as docker volumes, which do not support relative paths, so please make sure to use absolute paths: https://github.com/moby/moby/issues/4830
