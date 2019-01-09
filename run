@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IMAGE_DIR=/tmp/images
-VECTOR_DIR=/tmp/vectors
-OUT_DIR=/tmp/out
+IMAGE_DIR=/tmp/imagesim_images
+VECTOR_DIR=/tmp/imagesim_vectors
+OUT_DIR=/tmp/imagesim_out
 
 if [ ! -d "$IMAGE_DIR" ]; then
   echo "no image dir found at $IMAGE_DIR.." 
