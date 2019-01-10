@@ -1,9 +1,12 @@
 
 ## ImageSim
 
+How similar are these images to each other?
+
 ![Cabin](images/cabin0.jpg "Cabin")
 
-![Modern](images/modern0.jpg "Modern")
+![Modern](images/modern2.jpg "Modern")
+
 
 Given a directory of JPEG images, calculate how similar each image is to every other image.
 
