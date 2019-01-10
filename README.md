@@ -42,3 +42,9 @@ imagesim (master) $ cat out/cabin0.json
 ```
 
 Now try adding your own .jpg image to the `images` directory and see how similar it is to the existing images!
+
+### :snake: Anaconda :snake:
+
+I wanted to include a project that shows my comfort working with and understanding of machine learning solutions. Specifically of how to package the often complicated and numerous machine learning library dependencies.
+
+Also I think Google's inception model is just amazing in how it can generalize. It works with pictures of houses as shown above, but also with pictures of animals, art, cars, you name it.
