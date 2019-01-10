@@ -34,17 +34,11 @@ Now, generate image similarity values for the included cabin and modern house im
 ./run
 ```
 
-Your expected output should look like this:
+You should now have an `out` directory in your project containing the similarity values for all your input images. The similarity values look like this:
 
 ```
-imagesim (master) $ cat images/cabin0.json
+imagesim (master) $ cat out/cabin0.json
 [{"similarity": 1.0, "filename": "cabin0"}, {"similarity": 0.791, "filename": "cabin2"}, {"similarity": 0.756, "filename": "cabin3"}, {"similarity": 0.7449, "filename": "cabin1"}, {"similarity": 0.6627, "filename": "modern0"}, {"similarity": 0.6289, "filename": "modern3"}, {"similarity": 0.5995, "filename": "modern2"}, {"similarity": 0.5952, "filename": "modern1"}]
 ```
 
-Now try adding a new JPEG to the images directory and see how similar it is to the existing images!
-
-### Customization of Paths
-
-If you don't want to use the default paths edit the `IMAGE_DIR`, `VECTOR_DIR`, `OUT_DIR` variables in the file `run` to change where the script should find your images, where to place the vector representation of each image (this is useful if you'd like to inspect the raw vector for debugging), and where to place the final output json that contains the similarity value of each image to every other image.
-
-NOTE: These variables are used as docker volumes, which do not support relative paths, so please make sure to use absolute paths: https://github.com/moby/moby/issues/4830
+Now try adding your own .jpg image to the `images` directory and see how similar it is to the existing images!
