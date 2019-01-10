@@ -1,6 +1,10 @@
 
 ## ImageSim
 
+![Cabin](images/cabin0.jpg "Cabin")
+
+![Modern](images/modern0.jpg "Modern")
+
 Given a directory of JPEG images, calculate how similar each image is to every other image.
 
 NOTE: This code is a modified version of Google's TensorFlow tutorial on the Inception model to show similarity between images, my contribution is primarily in dockerizing for ease of use.
