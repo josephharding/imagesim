@@ -41,10 +41,12 @@ imagesim (master) $ cat out/cabin0.json
 [{"similarity": 1.0, "filename": "cabin0"}, {"similarity": 0.791, "filename": "cabin2"}, {"similarity": 0.756, "filename": "cabin3"}, {"similarity": 0.7449, "filename": "cabin1"}, {"similarity": 0.6627, "filename": "modern0"}, {"similarity": 0.6289, "filename": "modern3"}, {"similarity": 0.5995, "filename": "modern2"}, {"similarity": 0.5952, "filename": "modern1"}]
 ```
 
-Now try adding your own .jpg image to the `images` directory and see how similar it is to the existing images!
+It looks like the Inception model worked! Cabins were similar to the other cabins, and the modern houses were least similar to the cabins. Now try adding your own .jpg image to the `images` directory and see how similar it is to the existing images.
 
 ### :snake: Anaconda :snake:
 
 I wanted to include a project that shows my comfort working with and understanding of machine learning solutions. Specifically of how to package the often complicated and numerous machine learning library dependencies.
+
+I went with Docker because apart from becoming arguably the new standard software deployment unit, it's also the most universal way (perhaps with Vagrant in second place) of allowing users to experiment with technologies that depend on a non-trivial software stack quickly.
 
 Also I think Google's inception model is just amazing in how it can generalize. It works with pictures of houses as shown above, but also with pictures of animals, art, cars, you name it.
